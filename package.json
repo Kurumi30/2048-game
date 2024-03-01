@@ -1,0 +1,21 @@
+{
+  "name": "2048-game",
+  "private": false,
+  "version": "0.0.1",
+  "description": "Jogo 2048 feito com HTML | CSS | JS",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "author": "Kurumi30",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kurumi30/"
+  },
+  "devDependencies": {
+    "vite": "^5.1.4"
+  }
+}
