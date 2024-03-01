@@ -1,7 +1,7 @@
 {
   "name": "2048-game",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Jogo 2048 feito com HTML | CSS | JS",
   "type": "module",
   "scripts": {
