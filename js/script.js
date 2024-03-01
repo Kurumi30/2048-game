@@ -11,6 +11,70 @@ setupInput()
 
 function setupInput() {
   window.addEventListener("keydown", handleInput, { once: true })
+  window.addEventListener("swiped", handleMobileInput, { once: true })
+}
+
+const message = "Fim de jogo! Você perdeu ;-;\nPara iniciar um novo jogo, recarregue a página :)"
+
+async function handleMobileInput(e) {
+  switch (e.detail.dir) {
+    case "up":
+      if (!canMoveUp()) {
+        setupInput()
+
+        return
+      }
+
+      await moveUp()
+      break
+    case "down":
+      if (!canMoveDown()) {
+        setupInput()
+
+        return
+      }
+
+      await moveDown()
+      break
+    case "left":
+      if (!canMoveLeft()) {
+        setupInput()
+
+        return
+      }
+
+      await moveLeft()
+      break
+    case "right":
+      if (!canMoveRight()) {
+        setupInput()
+
+        return
+      }
+
+      await moveRight()
+      break
+    default:
+      setupInput()
+
+      return
+  }
+
+  grid.cells.forEach(cell => cell.mergeTiles())
+
+  const newTile = new Tile(gameBoard)
+
+  grid.randomEmptyCell().tile = newTile
+
+  if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
+    newTile.waitForTransition(true).then(() => {
+      alert(message)
+    })
+
+    return
+  }
+
+  setupInput()
 }
 
 async function handleInput(e) {
@@ -65,7 +129,7 @@ async function handleInput(e) {
 
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      alert("Game over!\nRefresh the page for a new one!")
+      alert(message)
     })
 
     return
