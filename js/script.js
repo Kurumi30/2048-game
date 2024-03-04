@@ -13,6 +13,13 @@ const notyf = new Notyf({
     y: "top",
   },
   ripple: true,
+  types: [
+    {
+      type: 'info',
+      background: 'blue',
+      icon: false,
+    }
+  ]
 })
 
 function notification(message, type) {
@@ -28,6 +35,12 @@ grid.randomEmptyCell().tile = new Tile(gameBoard)
 setupInput()
 
 function setupInput() {
+  if (isMobile()) {
+    notification("Deslize para mover as peças", "info")
+  } else {
+    notification("Use as setas ou as teclas WASD para mover as peças", "info")
+  }
+
   window.addEventListener("keydown", handleInput, { once: true })
   window.addEventListener("swiped", handleMobileInput, { once: true })
 }
@@ -83,8 +96,11 @@ async function handleMobileInput(e) {
   grid.randomEmptyCell().tile = newTile
 
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
-    newTile.waitForTransition(true).then(() => {
+    newTile.waitForTransition(true).then(async () => {
       notification(defeatMessage, "error")
+
+      await delay()
+
       notification(info, "success")
     })
 
@@ -149,8 +165,11 @@ async function handleInput(e) {
   grid.randomEmptyCell().tile = newTile
 
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
-    newTile.waitForTransition(true).then(() => {
+    newTile.waitForTransition(true).then(async () => {
       notification(defeatMessage, "error")
+
+      await delay()
+
       notification(info, "success")
     })
 
@@ -241,4 +260,14 @@ function canMove(cells) {
       return moveToCell.canAccept(cell.tile)
     })
   })
+}
+
+function delay(ms = 1500) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  )
 }
