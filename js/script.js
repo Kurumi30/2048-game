@@ -32,15 +32,15 @@ function notification(message, type) {
 grid.randomEmptyCell().tile = new Tile(gameBoard)
 grid.randomEmptyCell().tile = new Tile(gameBoard)
 
+if (isMobile()) {
+  notification("Deslize para mover as peças", "info")
+} else {
+  notification("Use as setas ou as teclas WASD para mover as peças", "info")
+}
+
 setupInput()
 
 function setupInput() {
-  if (isMobile()) {
-    notification("Deslize para mover as peças", "info")
-  } else {
-    notification("Use as setas ou as teclas WASD para mover as peças", "info")
-  }
-
   window.addEventListener("keydown", handleInput, { once: true })
   window.addEventListener("swiped", handleMobileInput, { once: true })
 }
