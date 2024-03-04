@@ -10,18 +10,15 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body,
-.tile {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 body {
   background-color: #385ad8;
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: min-content;
   height: 100vh;
-  margin: 0;
+  margin: 0 auto;
 }
 
 #game-board {
@@ -32,6 +29,10 @@ body {
   gap: var(--cell-gap);
   padding: var(--cell-gap);
   position: relative;
+  user-select: none;
+
+  margin: auto 0;
+  font-size: calc(var(--cell-size) / 8 * 3);
 }
 
 .cell {
@@ -45,6 +46,10 @@ body {
 }
 
 .tile {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
   font-size: 7.5vmin;
   position: absolute;
   width: var(--cell-size);
@@ -55,7 +60,15 @@ body {
   background-color: hsl(200, 50%, var(--background-lightness));
   color: hsl(200, 25%, var(--text-lightness));
   animation: show 200ms ease-in-out;
-  transition: 100ms ease-in-out;
+  transition:
+    top 100ms ease-in-out,
+    left 100ms ease-in-out,
+    right 100ms ease-in-out,
+    bottom 100ms ease-in-out;
+}
+
+.tile[data-animation="show"] {
+  animation: show 200ms ease-in-out;
 }
 
 @keyframes show {
@@ -63,4 +76,50 @@ body {
     opacity: .5;
     transform: scale(0);
   }
+}
+
+.header {
+  display: flex;
+  padding-bottom: 1vmin;
+  margin-top: 2.5vmin;
+  border-bottom: 1px solid #CCC;
+  align-items: center;
+  gap: 1vmin;
+}
+
+.title {
+  text-align: center;
+  margin: 0;
+  font-size: max(5vmin, 20px);
+  flex-grow: 1;
+}
+
+.score-container {
+  flex-basis: calc(max(10vmin, 70px) + 1vmin);
+  flex-shrink: 0;
+}
+
+.stat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.stat-label {
+  position: relative;
+  font-size: max(2vmin, 10px);
+  color: #CCC;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.stat-amount {
+  font-size: max(3vmin, 15px);
+  font-weight: bold;
+  text-align: center;
+}
+
+.score {
+  position: relative;
 }

@@ -7,7 +7,7 @@ const grid = new Grid(gameBoard)
 const defeatMessage = "Fim de jogo! Você perdeu ;-;"
 const info = "Para iniciar um novo jogo, recarregue a página :)"
 const notyf = new Notyf({
-  duration: 4000,
+  duration: 3000,
   position: {
     x: "center",
     y: "top",
