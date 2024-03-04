@@ -4,6 +4,24 @@ import Tile from "./Tile.js"
 const gameBoard = document.getElementById("game-board")
 const grid = new Grid(gameBoard)
 
+const defeatMessage = "Fim de jogo! Você perdeu ;-;"
+const info = "Para iniciar um novo jogo, recarregue a página :)"
+const notyf = new Notyf({
+  duration: 4000,
+  position: {
+    x: "center",
+    y: "top",
+  },
+  ripple: true,
+})
+
+function notification(message, type) {
+  notyf.open({
+    type: type,
+    message: message,
+  })
+}
+
 grid.randomEmptyCell().tile = new Tile(gameBoard)
 grid.randomEmptyCell().tile = new Tile(gameBoard)
 
@@ -13,8 +31,6 @@ function setupInput() {
   window.addEventListener("keydown", handleInput, { once: true })
   window.addEventListener("swiped", handleMobileInput, { once: true })
 }
-
-const message = "Fim de jogo! Você perdeu ;-;\nPara iniciar um novo jogo, recarregue a página :)"
 
 async function handleMobileInput(e) {
   switch (e.detail.dir) {
@@ -68,7 +84,8 @@ async function handleMobileInput(e) {
 
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      alert(message)
+      notification(defeatMessage, "error")
+      notification(info, "success")
     })
 
     return
@@ -80,6 +97,7 @@ async function handleMobileInput(e) {
 async function handleInput(e) {
   switch (e.key) {
     case "ArrowUp":
+    case "w":
       if (!canMoveUp()) {
         setupInput()
 
@@ -89,6 +107,7 @@ async function handleInput(e) {
       await moveUp()
       break
     case "ArrowDown":
+    case "s":
       if (!canMoveDown()) {
         setupInput()
 
@@ -98,6 +117,7 @@ async function handleInput(e) {
       await moveDown()
       break
     case "ArrowLeft":
+    case "a":
       if (!canMoveLeft()) {
         setupInput()
 
@@ -107,6 +127,7 @@ async function handleInput(e) {
       await moveLeft()
       break
     case "ArrowRight":
+    case "d":
       if (!canMoveRight()) {
         setupInput()
 
@@ -129,7 +150,8 @@ async function handleInput(e) {
 
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      alert(message)
+      notification(defeatMessage, "error")
+      notification(info, "success")
     })
 
     return

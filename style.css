@@ -22,7 +22,6 @@ body {
   display: flex;
   height: 100vh;
   margin: 0;
-  font-size: 7.5vmin;
 }
 
 #game-board {
@@ -46,6 +45,7 @@ body {
 }
 
 .tile {
+  font-size: 7.5vmin;
   position: absolute;
   width: var(--cell-size);
   height: var(--cell-size);
